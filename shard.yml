@@ -1,0 +1,13 @@
+name: bias
+version: 0.1.0
+
+authors:
+  - your-name-here <your-email-here>
+
+targets:
+  bias:
+    main: src/bias.cr
+
+crystal: 0.32.1
+
+license: MIT
