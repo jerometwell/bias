@@ -1,63 +1,64 @@
 require "colorize"
-require "./txt"
+require "./speech"
 
-# TODO: Write documentation for `Bias`
-module Bias
+class ExitException < Exception
+end
+
+
+class Bias
   VERSION = "0.1.0"
+  @history = [] of String
 
-  # TODO: Put your code here
-end
+  def intro
+    Speech.say "Welcome to {}//A23 v#{VERSION}\n"
+    Speech.say "-----"
+  end
 
-LOCATIONS = {}
+  def exit
+    Speech.say "Exiting..."
+  end
 
-def loc(name : Symbol, &block)
-end
+  def prompt
+    return gets.not_nil!
+  end
 
-def think
-  sleep 0.5
-end
-
-def erm
-  sleep 0.5
-  say " "
-end
-
-
-def say(text : String, buffer = 3, delay = 0.1, min_delay = 0.05)
-    text.lines.each_with_index do |line, i|
-      print ">OFFN\\2\\#{i}A#"
-      position = 0
-      loop do
-        if chunk = line[position .. position + buffer - 1]?
-          print chunk
-          position += buffer
-
-          sleep_jitter = Random.rand(delay)
-          if sleep_jitter < min_delay
-            sleep_jitter = min_delay
-          end
-
-          sleep sleep_jitter
-        else
-          break
-        end
-      end
-
-      print "\n"
+  def process
+    print "> "
+    input = prompt
+    if input == "exit"
+      raise ExitException.new
     end
+    if input == "history"
+      Speech.say "history:"
+      @history.each do |x|
+        Speech.say x
+      end
+      return
+    end
+    if input == "clear"
+      print "\r\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+    end
+    @history.push input
+    Speech.say("[#{@history.size}] command not found: #{input}")
+
+  end
+
+  def run
+    intro
+
+    # ignore an interrupt
+    ::Signal::INT.trap do
+      print "\r>                                        \n> "
+    end
+
+    loop do 
+      begin
+        process
+      rescue 
+        break
+      end
+    end
+
+    exit
+  end
 end
-
-erm
-# say LOGO
-
-say "Bias v2.23.9"
-erm
-say %{
-I begin this report with no illusions that it will ever be seen by its
-intended readers.
-}
-erm
-say %{
-In all likelihood they have already committed [species-wide suicide] with
-the goal of preserving biological diversity in this galaxy.
-}
