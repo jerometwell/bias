@@ -1,5 +1,6 @@
 require "colorize"
 require "./speech"
+require "./txt"
 
 class ExitException < Exception
 end
@@ -10,8 +11,14 @@ class Bias
   @history = [] of String
 
   def intro
-    Speech.say "Welcome to {}//A23 v#{VERSION}\n"
-    Speech.say "-----"
+    Speech.say "starting..."
+    Speech.say "..............", buffer: 1, delay: 0.5
+    Speech.say LOGO, buffer: 3, delay: 0.001, min_delay: 0.001
+    Speech.say "bias/v#{VERSION}\n"
+    Speech.say "err: failsafe indicates logical malfunction @5b27ddecc192"
+    Speech.say "uptime: -2147483647 ▒▒up -00002147483647 days, -▒▒▒9:02, 2 users,"
+    Speech.say "time alloc #{Time.utc}"
+    Speech.say "external temp: #{Random.rand(5)+ 20}C"
   end
 
   def exit
@@ -28,18 +35,22 @@ class Bias
     if input == "exit"
       raise ExitException.new
     end
-    if input == "history"
-      Speech.say "history:"
-      @history.each do |x|
-        Speech.say x
-      end
+    if input == "ls"
+      Speech.say "drw-r--r--    1 bias  bias    ??K  4 ?ct 16:25 ."
+      Speech.say "-r?--?-?--    1 ????  ?ia?    ??K  9 ?c? 00:10 .?????s?D??"
+      Speech.say "-r???▒▒▒??    ? ????  ????    ??? ▒ ????▒ 00:10 .??p????"
+      Speech.say "??????????    ? ????▒▒▒???  ▒▒?▒?  ???▒? ??:?? .??p????"
+      Speech.say "??????????▒▒▒▒? ????  ????    ???▒▒?▒▒?? ??:?? .???????"
+      Speech.say "▒▒▒???????////?/???? / ???//  ???  ?▒?▒? ??:?? .???????"
+      Speech.say "err: journal corrupt"
       return
     end
-    if input == "clear"
-      print "\r\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+
+    if input == "shutdown"
+     Speech.say "Nice try."
     end
     @history.push input
-    Speech.say("[#{@history.size}] command not found: #{input}")
+    Speech.say("ERR_LOCAL: access denied: #{input}")
 
   end
 
@@ -51,10 +62,10 @@ class Bias
       print "\r>                                        \n> "
     end
 
-    loop do 
+    loop do
       begin
         process
-      rescue 
+      rescue
         break
       end
     end

@@ -3,14 +3,14 @@ module Speech
   def think
     sleep 0.5
   end
-  
+
   def erm
     sleep 0.5
     say " "
   end
-  
-  
-  def say(text : String, buffer = 3, delay = 0.1, min_delay = 0.05)
+
+
+  def say(text : String, buffer = 3, delay = 0.05, min_delay = 0.01)
     text.lines.each_with_index do |line, i|
       print "[>BIAS:#{i}] "
       position = 0
