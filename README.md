@@ -1,18 +1,6 @@
 # bias
 
-TODO: Write a description here
-
-## Installation
-
-TODO: Write installation instructions here
-
-## Usage
-
-TODO: Write usage instructions here
-
-## Development
-
-TODO: Write development instructions here
+A toy shell, written in crystal.
 
 ## Contributing
 
@@ -24,4 +12,4 @@ TODO: Write development instructions here
 
 ## Contributors
 
-- [your-name-here](https://github.com/your-github-user) - creator and maintainer
+- [Jerome Twel](https://github.com/jerometwell) - creator and maintainer

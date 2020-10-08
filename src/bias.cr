@@ -1,21 +1,18 @@
 require "colorize"
-require "./speech"
 
 class ExitException < Exception
 end
-
 
 class Bias
   VERSION = "0.1.0"
   @history = [] of String
 
   def intro
-    Speech.say "Welcome to {}//A23 v#{VERSION}\n"
-    Speech.say "-----"
+    puts "Welcome to {}//A23 v#{VERSION}\n"
   end
 
   def exit
-    Speech.say "Exiting..."
+    puts "Exiting..."
   end
 
   def prompt
@@ -29,9 +26,9 @@ class Bias
       raise ExitException.new
     end
     if input == "history"
-      Speech.say "history:"
+      puts "history:"
       @history.each do |x|
-        Speech.say x
+        puts x
       end
       return
     end
@@ -39,8 +36,7 @@ class Bias
       print "\r\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
     end
     @history.push input
-    Speech.say("[#{@history.size}] command not found: #{input}")
-
+    puts "[#{@history.size}] command not found: #{input}"
   end
 
   def run
@@ -51,10 +47,10 @@ class Bias
       print "\r>                                        \n> "
     end
 
-    loop do 
+    loop do
       begin
         process
-      rescue 
+      rescue
         break
       end
     end
